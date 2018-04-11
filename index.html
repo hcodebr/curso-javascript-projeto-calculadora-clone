@@ -1810,59 +1810,6 @@
         </div>
     </div>
 
-    <script>
-        
-        let display = document.getElementById("display");
-        let btn = {
-            ac: document.getElementById("btn-ac"),
-            um: document.getElementById("btn-1")
-        };
-        
-        for (let name in btn) {
-
-            btn[name].addEventListener('mousedown', function (e) {
-                
-                this.querySelectorAll('.btn-light stop').forEach(function (stop) {
-                    stop.dataset.stopColor = stop.style.stopColor;
-                    stop.style.stopColor = "#333333";
-                });
-
-            });
-
-            btn[name].addEventListener('mouseup', function (e) {
-
-                this.querySelectorAll('.btn-light stop').forEach(function (stop) {
-                    stop.style.stopColor = stop.dataset.stopColor;
-                });
-
-            });
-
-        }
-
-        btn.ac.addEventListener('click', function(e){
-
-            let audioClick = document.createElement('audio');
-            audioClick.src = "click.mp3";
-            audioClick.current = 0;
-            audioClick.play();
-
-            display.innerHTML = "0";
-
-        });
-
-        window.addEventListener('keyup', function(e){
-
-            let audioClick = document.createElement('audio');
-            audioClick.src = "click.mp3";
-            audioClick.current = 0;
-            audioClick.play();
-
-            console.log(e);
-
-        });
-        
-    </script>
-
 </body>
 
 </html>
