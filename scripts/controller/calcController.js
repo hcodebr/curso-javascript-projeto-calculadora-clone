@@ -8,6 +8,7 @@ class CalcController {
     this.initialize();
   }
 
+  
   initialize() {
     setInterval(() => {
       this.displayDate = this.currentDate.toLocaleDateString("locale");
