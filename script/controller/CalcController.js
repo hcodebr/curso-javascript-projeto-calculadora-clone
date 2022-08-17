@@ -23,19 +23,43 @@ class CalcController{
    
     }
 
+
+    addEventListenerAll(element, events, fn){
+
+        events.split ('').forEach (event => {
+
+
+            element.addEventListener(event, fn, false);
+
+
+        });
+
+
+
+    }
+
+
     initButtonsEvents(){
 
        let buttons = document.querySelectorAll("#buttons > g, #parts > g");    //seleciona os botoes da calc pela classe 
 
         buttons.forEach((btn, index)=>{
 
-            btn.addEventListener('click', e => {
+            this.addEventListener(btn,"click drag", e => {
 
                 console.log(btn.className.baseVal.replace("btn-",""));
 
 
             });
-       })
+
+            this.addEventListenerAll(btn,"mouseup mouseover mousedown", e => {
+
+                btn.style.cursor = "pointer";
+
+            });
+
+
+       });
     }
 
     setDisplayDateTime(){
