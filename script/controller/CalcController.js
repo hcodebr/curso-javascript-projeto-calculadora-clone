@@ -1,6 +1,7 @@
 class CalcController{
 
     constructor(){
+        this._operation = [];
         this._locale = 'pt-br';
         this._displayCalcEl = document.querySelector("#display");
         this._dateEL= document.querySelector("#data");
@@ -26,7 +27,7 @@ class CalcController{
 
     addEventListenerAll(element, events, fn){
 
-        events.split ('').forEach (event => {
+        events.split(' ').forEach (event => {
 
 
             element.addEventListener(event, fn, false);
@@ -35,9 +36,69 @@ class CalcController{
         });
 
 
+    }
+
+    clearAll(){
+
 
     }
 
+    clearEntry(){
+
+
+    }
+
+    setError(){
+
+        this.displayCalc = "error";
+
+    }
+
+    execBtn(value){
+
+        switch(value){
+            case 'ac':
+            this.clearAll();    
+            break;
+            
+            case 'ce':
+            this.clearEntry(); 
+            break;
+
+            case 'soma': 
+            break;
+
+            case 'subtracao': 
+            break;
+
+            case 'divisao': 
+            break;
+
+
+            case 'multiplicacao': 
+            break;
+
+
+            case 'porcento': 
+            break;
+
+
+            case 'igual': 
+            break;
+
+            default:
+                this.setError();
+                break;
+
+
+
+
+
+
+        }
+
+           
+    }
 
     initButtonsEvents(){
 
@@ -45,9 +106,11 @@ class CalcController{
 
         buttons.forEach((btn, index)=>{
 
-            this.addEventListener(btn,"click drag", e => {
+            this.addEventListenerAll(btn,"click drag", e => {
 
-                console.log(btn.className.baseVal.replace("btn-",""));
+               let textBtn = btn.className.baseVal.replace("btn-","");
+
+                this.execBtn();
 
 
             });
@@ -55,11 +118,12 @@ class CalcController{
             this.addEventListenerAll(btn,"mouseup mouseover mousedown", e => {
 
                 btn.style.cursor = "pointer";
+            
+            
+            }); 
 
-            });
 
-
-       });
+        });  
     }
 
     setDisplayDateTime(){
