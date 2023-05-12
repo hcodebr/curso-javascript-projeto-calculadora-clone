@@ -9,8 +9,12 @@ class CalcController {
     initialize(){
 
         let displayCalcEl = document.querySelector("#display");
-        let dateEl = document.querySelector("#hora");
-        let timeEl = document.querySelector("#data");
+        let dateEl = document.querySelector("#data");
+        let timeEl = document.querySelector("#hora");
+
+        displayCalcEl.innerHTML = "4567";
+        dateEl.innerHTML = "13/04/1999";
+        timeEl.innerHTML = "00:00";
 
     }
     
