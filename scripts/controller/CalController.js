@@ -2,6 +2,7 @@ class CalController {
 
     constructor(){
 
+        this._operation = [];
         this._locale = 'pt-BR';
         this._displayCalcEl = document.querySelector("#display");
         this._dateEl = document.querySelector("#date");
@@ -28,6 +29,85 @@ class CalController {
         });
     }
 
+    clearAll(){
+
+        this._operation = [];
+
+    }
+    clearEntry(){
+
+        this._operation.pop();
+
+    }
+    addOperator(value){
+
+        this._operation.push(value);
+
+        console.log(this.operation);
+        
+    }
+    setError(){
+
+        this.displayCalc = "Error";
+
+    }
+
+    execBtn(value){
+
+        switch (value) {
+
+            case 'ac':
+            this.clearAll();
+            break;
+
+            case 'ce':
+            this.clearEntry();
+            break;
+
+            case 'soma':
+
+            break;
+
+            case 'subtracao':
+                
+            break;
+
+            case 'subtracao':
+                
+            break;
+
+            case 'multiplicacao':
+                
+            break;
+
+            case 'porcento':
+                
+            break;
+
+            case 'igual':
+                
+            break;
+
+            case "0":
+            case "1":
+            case "2":
+            case "3":
+            case "4":
+            case "5":
+            case "6":
+            case "7":
+            case "8":
+            case "9":
+            this.addOperator(parseInt (value));
+                break;
+
+            default:
+            this.setError();
+            break;
+        }
+
+    }
+
     initButtonsEvents(){
 
         let buttons = document.querySelectorAll("#buttons > g");
@@ -35,6 +115,12 @@ class CalController {
         buttons.forEach((btn, index) => {
             this.addEventListenerAll(btn, "click drag", e => {
                 console.log(btn.className.baseVal.replace("btn-", ""));
+
+                let textBtn = btn.className && btn.className.baseVal ? btn.className.baseVal.replace("btn-", "") : "";
+
+
+                this.execBtn(textBtn);
+
             });
 
             this.addEventListenerAll(btn, "mouseover mouseup mousedown", e => {
