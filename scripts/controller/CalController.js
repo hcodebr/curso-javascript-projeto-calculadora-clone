@@ -30,64 +30,106 @@ class CalController {
     }
 
     clearAll(){
-
         this._operation = [];
-
+        this.setDisplayCalc('0');
     }
+
     clearEntry(){
-
         this._operation.pop();
-
+        this.setLastNumberToDisplay();
     }
-    addOperator(value){
 
-        this._operation.push(value);
-
-        console.log(this.operation);
-        
+    getLastOperation(){
+        return this._operation[this._operation.length - 1];
     }
+
+    isOperator(value){
+        return (['+', '-', '*', '%', '/'].indexOf(value) > -1);
+    }
+
+    _setLastOperation(value){
+        if (isNaN(this.getLastOperation())) {
+            if (this.isOperator(value)) {
+                this.setLastOperation(value);
+            } else {
+                let newValue = this.getLastOperation().toString() + value.toString();
+                this._operation.push(newValue);
+            }
+        } else {
+            this._operation.push(value);
+        }
+    }
+
+    setLastOperation(value){
+        this._operation[this._operation.length - 1] = value;
+    }
+
+    addOperation(value){
+        this._setLastOperation(value);
+        this.setLastNumberToDisplay();
+    }
+
     setError(){
+        this.setDisplayCalc("Error");
+    }
 
-        this.displayCalc = "Error";
+    setLastNumberToDisplay(){
+        let lastNumber = this.getLastItem(true);
+        this.setDisplayCalc(lastNumber);
+    }
 
+    getLastItem(isNumber = false){
+        let lastItem;
+
+        for (let i = this._operation.length - 1; i >= 0; i--) {
+            if (this.isOperator(this._operation[i]) !== isNumber) {
+                lastItem = this._operation[i];
+                break;
+            }
+        }
+
+        if (!lastItem) {
+            lastItem = (isNumber) ? this._operation[0] : '';
+        }
+
+        return lastItem;
     }
 
     execBtn(value){
-
         switch (value) {
-
             case 'ac':
-            this.clearAll();
-            break;
+                this.clearAll();
+                break;
 
             case 'ce':
-            this.clearEntry();
-            break;
+                this.clearEntry();
+                break;
 
             case 'soma':
-
-            break;
-
-            case 'subtracao':
-                
-            break;
+                this.addOperation('+');
+                break;
 
             case 'subtracao':
-                
-            break;
+                this.addOperation('-');
+                break;
 
             case 'multiplicacao':
-                
-            break;
+                this.addOperation('*');
+                break;
+
+            case 'divisao':
+                this.addOperation('/');
+                break;
 
             case 'porcento':
-                
-            break;
+                this.addOperation('%');
+                break;
 
             case 'igual':
-                
-            break;
+                // Implemente a lógica para o botão igual
+                break;
 
+            case 'ponto':
             case "0":
             case "1":
             case "2":
@@ -98,29 +140,22 @@ class CalController {
             case "7":
             case "8":
             case "9":
-            this.addOperator(parseInt (value));
+                this.addOperation(parseInt(value));
                 break;
 
             default:
-            this.setError();
-            break;
+                this.setError();
+                break;
         }
-
     }
 
     initButtonsEvents(){
-
         let buttons = document.querySelectorAll("#buttons > g");
 
         buttons.forEach((btn, index) => {
             this.addEventListenerAll(btn, "click drag", e => {
-                console.log(btn.className.baseVal.replace("btn-", ""));
-
                 let textBtn = btn.className && btn.className.baseVal ? btn.className.baseVal.replace("btn-", "") : "";
-
-
                 this.execBtn(textBtn);
-
             });
 
             this.addEventListenerAll(btn, "mouseover mouseup mousedown", e => {
@@ -136,6 +171,10 @@ class CalController {
             year: "numeric"
         });
         this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
+    }
+
+    setDisplayCalc(value){
+        this._displayCalcEl.innerHTML = value;
     }
 
     get displayTime(){
