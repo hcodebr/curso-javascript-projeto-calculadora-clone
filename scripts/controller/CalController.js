@@ -7,45 +7,52 @@ class CalController {
         this._dateEl = document.querySelector("#date");
         this._timeEl = document.querySelector("#time");
 
-         this._currentDate;
-         this.initialize();
-
+        this._currentDate;
+        this.initialize();
     }
 
     initialize(){
         
-        this.displayDate = this.currentDate.toLocaleDateString(this._locale);
-        this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
+        this.setDisplayDateTime();
 
-        setInterval(()=>{
-
-            this.displayDate = this.currentDate.toLocaleDateString(this._locale);
-            this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
-
+        setInterval(() => {
+            this.setDisplayDateTime();
         }, 1000);
 
+        this.initButtonsEvents();
     }
 
-    setdisplayDateTime(){
+    initButtonsEvents(){
+
+        let buttons = document.querySelectorAll("#buttons > g");
+
+        buttons.forEach((btn, index) => {
+            btn.addEventListener('click', e => {
+                console.log(btn.className.baseVal.replace("btn-", ""));
+            });
+        });
+    }
+
+    setDisplayDateTime(){
         this.displayDate = this.currentDate.toLocaleDateString(this._locale, {
             day: "2-digit",
             month: "long",
             year: "numeric"
         });
-            this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
+        this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
     }
 
     get displayTime(){
         return this._timeEl.innerHTML;
     }
     set displayTime(value){
-        return this._timeEl.innerHTML = value;
+        this._timeEl.innerHTML = value; 
     }
     get displayDate(){
         return this._dateEl.innerHTML;
     }
     set displayDate(value){
-        return this._dateEl.innerHTML = value;
+        this._dateEl.innerHTML = value;
     }
     get displayCalc(){
         return this._displayCalcEl.innerHTML;
@@ -59,8 +66,10 @@ class CalController {
         return new Date();
     }
 
-    set dataAtual(valor){
+    set currentDate(value){
         this._currentDate = value;
     }
-
 }
+
+// Exemplo de utilização
+const calculator = new CalController();
