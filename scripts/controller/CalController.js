@@ -103,7 +103,7 @@ class CalController {
 
             this._operation = [result];
 
-            if (last) this._operation.push(last);
+            if (last) this._operation.push(last); 
 
         }
 
