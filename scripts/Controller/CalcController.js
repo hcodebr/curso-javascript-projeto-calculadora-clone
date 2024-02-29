@@ -144,10 +144,11 @@ class CalcController {
   get displayCalc() {
     return this.displayCalcEl.innerHTML
   }
-
+  p
   set displayCalc(value) {
     this.displayCalcEl.innerHTML = value
   }
+  pp
 
   get currentDate() {
     return new Date()
